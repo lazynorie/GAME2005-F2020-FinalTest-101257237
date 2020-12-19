@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,15 +84,10 @@ public class CubeBehaviour : MonoBehaviour
         {
             if (GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
             {
-                if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
-                {
-                    transform.position -= contacts[i].penetration * 0.1f * contacts[i].face;
-                    contacts[i].cube.transform.position += contacts[i].penetration * 0.1f * contacts[i].face;
-                }
+                if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)                
+                    transform.position -= contacts[i].penetration * 0.005f * contacts[i].face;               
                 else
-                {
                     transform.position -= contacts[i].penetration * contacts[i].face;
-                }
             }
         }
 
