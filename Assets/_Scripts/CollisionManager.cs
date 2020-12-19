@@ -49,8 +49,10 @@ public class CollisionManager : MonoBehaviour
                 if (cube.name != "Player")
                 {
                     CheckSphereAABB(sphere, cube);
+                    CheckBulletAABB(sphere, cube);
+
                 }
-                
+
             }
         }
 
@@ -198,6 +200,42 @@ public class CollisionManager : MonoBehaviour
                     a.isGrounded = false;
                 }
             }
+        }
+    }
+
+    public static void CheckBulletAABB(BulletBehaviour bullet, CubeBehaviour cube)
+    {
+        Contact contactB = new Contact(cube);
+
+        if ((bullet.min.x <= cube.max.x && bullet.max.x >= cube.min.x) &&
+            (bullet.min.y <= cube.max.y && bullet.max.y >= cube.min.y) &&
+            (bullet.min.z <= cube.max.z && bullet.max.z >= cube.min.z))
+        {
+            float[] distances =
+            {
+                (bullet.max.x - cube.min.x),
+                (bullet.max.y - cube.min.y),
+                (bullet.max.z - cube.min.z),
+                (cube.max.x - bullet.min.x),
+                (cube.max.y - bullet.min.y),
+                (cube.max.z - bullet.min.z),
+            };
+
+            float penetration = float.MaxValue;
+            Vector3 face = Vector3.zero;
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (distances[i] < penetration)
+                {
+                    penetration = distances[i];
+                    face = faces[i];
+                }
+            }
+
+            bullet.penetration = penetration;
+            bullet.collisionNormal = -face;
+            Reflect(bullet);
         }
     }
 }

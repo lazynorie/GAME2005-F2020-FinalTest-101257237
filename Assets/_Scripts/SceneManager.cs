@@ -9,8 +9,5 @@ public class SceneManager : MonoBehaviour
     public void GoToMain()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main", LoadSceneMode.Single);
-
     }
-
-
 }
