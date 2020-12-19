@@ -82,12 +82,15 @@ public class CubeBehaviour : MonoBehaviour
         // Box interacton (push)
         for (int i = 0; i < contacts.Count; i++)
         {
+            Vector3 pushforce = contacts[i].penetration * contacts[i].face;
             if (GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
             {
-                if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)                
-                    transform.position -= contacts[i].penetration * 0.005f * contacts[i].face;               
+                if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
+                {
+                    transform.position -= pushforce * 0.005f;
+                }
                 else
-                    transform.position -= contacts[i].penetration * contacts[i].face;
+                    transform.position -= pushforce;
             }
         }
 
