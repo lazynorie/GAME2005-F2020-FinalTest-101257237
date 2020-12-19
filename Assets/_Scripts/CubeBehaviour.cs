@@ -79,9 +79,25 @@ public class CubeBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Box interacton (push)
+        for (int i = 0; i < contacts.Count; i++)
+        {
+            if (GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
+            {
+                if (contacts[i].cube.gameObject.GetComponent<RigidBody3D>().bodyType == BodyType.DYNAMIC)
+                {
+                    transform.position -= contacts[i].penetration * 0.1f * contacts[i].face;
+                    contacts[i].cube.transform.position += contacts[i].penetration * 0.1f * contacts[i].face;
+                }
+                else
+                {
+                    transform.position -= contacts[i].penetration * contacts[i].face;
+                }
+            }
+        }
+
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
-
     }
 
     private void OnDrawGizmos()

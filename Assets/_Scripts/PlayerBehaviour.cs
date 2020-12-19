@@ -14,6 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Movement")]
     public float speed;
+    public float airspeed;
     public bool isGrounded;
 
 
@@ -71,6 +72,36 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
             transform.position += body.velocity;
+        }
+        else
+        {
+            if (Input.GetAxisRaw("Horizontal") > 0.0f)
+            {
+                // move right
+                body.velocity = playerCam.transform.right * airspeed * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Horizontal") < 0.0f)
+            {
+                // move left
+                body.velocity = -playerCam.transform.right * airspeed * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Vertical") > 0.0f)
+            {
+                // move forward
+                body.velocity = playerCam.transform.forward * airspeed * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Vertical") < 0.0f)
+            {
+                // move Back
+                body.velocity = -playerCam.transform.forward * airspeed * Time.deltaTime;
+            }
+
+         
+
+         
         }
     }
 
