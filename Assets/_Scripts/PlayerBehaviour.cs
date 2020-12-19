@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _Fire();
         _Move();
+        if (Input.GetAxisRaw("MainMenu") > 0.0f)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     private void _Move()
